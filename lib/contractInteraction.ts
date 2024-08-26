@@ -9,15 +9,15 @@ export const flipCoin = async (
   signer: ethers.JsonRpcSigner,
   choice: boolean,
   amount: string
-): Promise<ethers.ContractTransaction> => 
+) => 
 {
   if(!contractAddress)throw Error("Contract Address is Empty!");
   const contract = new ethers.Contract(contractAddress, contractABI, signer);
   
   try {
     const tx = await contract.flipCoin(choice, { value: ethers.parseEther(amount) });
-
-    return tx;
+    const receipt = await tx.wait();
+    return {tx, receipt};
   } catch (error) {
     console.error("Transaction failed", error);
     throw error;

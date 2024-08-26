@@ -61,8 +61,7 @@ const CoinFlip: React.FC = () => {
         }
 
         try {
-            const tx = await flipCoin(signer, choice, amount);
-            const receipt = await tx.wait();
+            const {tx, receipt} = await flipCoin(signer, choice, amount);
             console.log("Transaction:", tx);
             console.log("Transaction Receipt:", receipt);
 
